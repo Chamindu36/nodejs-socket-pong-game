@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-socket-pong-game",
+  "version": "1.0.0",
+  "description": "Node js Socket example which uses the sockets to implement pong multiplayer game as an example with Pong front end",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chamindu36/nodejs-socket-pong-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chamindu36/nodejs-socket-pong-game/issues"
+  },
+  "homepage": "https://github.com/Chamindu36/nodejs-socket-pong-game#readme",
+  "dependencies": {
+    "socket.io": "^4.6.2"
+  }
+}
