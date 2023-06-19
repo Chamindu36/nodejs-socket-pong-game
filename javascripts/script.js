@@ -92,6 +92,11 @@ function ballReset() {
   ballX = width / 2;
   ballY = height / 2;
   speedY = 3;
+  socket.emit('ballMove', {
+    ballX,
+    ballY,
+    score,
+  });
 }
 
 // Adjust Ball Movement
@@ -102,6 +107,12 @@ function ballMove() {
   if (playerMoved) {
     ballX += speedX;
   }
+  // broadcaset ball movement
+  socket.emit('ballMove', {
+    ballX,
+    ballY,
+    score,
+  });
 }
 
 // Determine What Ball Bounces Off, Score Points, Reset Ball
@@ -144,20 +155,20 @@ function ballBoundaries() {
         if (speedY > 5) {
           speedY = 5;
         }
+        ballDirection = -ballDirection;
+        trajectoryX[1] = ballX - (paddleX[1] + paddleDiff);
+        speedX = trajectoryX[1] * 0.3;
+      } else {
+        // // Reset Ball, Increase Computer Difficulty, add to Player Score
+        // if (computerSpeed < 6) {
+        //   computerSpeed += 0.5;
+        // }
+        ballReset();
+        score[0]++;
       }
-      ballDirection = -ballDirection;
-      trajectoryX[1] = ballX - (paddleX[1] + paddleDiff);
-      speedX = trajectoryX[1] * 0.3;
-    } else {
-      // // Reset Ball, Increase Computer Difficulty, add to Player Score
-      // if (computerSpeed < 6) {
-      //   computerSpeed += 0.5;
-      // }
-      ballReset();
-      score[0]++;
     }
   }
-}
+};
 
 // Computer Movement
 // function computerAI() {
@@ -178,9 +189,13 @@ function ballBoundaries() {
 // Called Every Frame
 function animate() {
   // computerAI(); // Run computer auto player
-  ballMove();
+  // ballMove();
+  if (isReferee) {
+    ballMove();
+    ballBoundaries();
+  }
   renderCanvas();
-  ballBoundaries();
+  // ballBoundaries();
   window.requestAnimationFrame(animate);
 }
 
@@ -237,4 +252,8 @@ socket.on('paddleMove', (paddleData) => {
   // Toggle 1 into 0, and 0 into 1
   const opponentPaddleIndex = 1 - paddleIndex;
   paddleX[opponentPaddleIndex] = paddleData.xPosition;
+});
+
+socket.on('ballMove', (ballData) => {
+  ({ ballX, ballY, score } = ballData);
 });
