@@ -187,6 +187,8 @@ function animate() {
 function startGame() {
   createCanvas();
   renderIntro();
+  // set ready state
+  socket.emit('ready');
 
   paddleIndex = 0;
   window.requestAnimationFrame(animate);
@@ -207,3 +209,6 @@ function startGame() {
 // On Load
 startGame();
 
+socket.on('connect', () => {
+  console.log('Connected as...', socket.id);
+})
