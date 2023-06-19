@@ -23,7 +23,9 @@ io.on('connection', (socket) => {
         readyPlayerCount++;
 
         if (readyPlayerCount === 2) {
-            //broadcast('startGame')
+            // Select the second client as referee which is base client
+            // Then braodcast that to all clients (players)
+            io.emit('startGame', socket.id);
         }
     });
 });
