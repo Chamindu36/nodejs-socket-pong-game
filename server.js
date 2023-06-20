@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
 
         readyPlayerCount++;
 
-        if (readyPlayerCount === 2) {
+        if (readyPlayerCount % 2 === 0) {
             // Select the second client as referee which is base client
             // Then braodcast that to all clients (players)
             io.emit('startGame', socket.id);
@@ -35,5 +35,9 @@ io.on('connection', (socket) => {
 
     socket.on('ballMove', (ballData) => {
         socket.broadcast.emit('ballMove', ballData);
+    });
+
+    socket.on('disconnect', (reason) => {
+        console.log(`Client ${socket.id} disconnected: ${reason}`);
     });
 });
