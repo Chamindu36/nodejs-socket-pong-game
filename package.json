@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Chamindu36/nodejs-socket-pong-game#readme",
   "dependencies": {
+    "express": "^4.18.2",
     "socket.io": "^4.6.2"
   }
 }
